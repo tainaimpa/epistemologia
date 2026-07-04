@@ -1,0 +1,77 @@
+<div id="sidebar">
+
+  <div class="s-section">
+    <span class="s-label">Posição</span>
+    <div class="s-row" style="align-items:flex-start;gap:10px">
+      <svg width="14" height="72" style="flex-shrink:0;margin-top:3px">
+        <defs>
+          <linearGradient id="yg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="var(--color-science)"/>
+            <stop offset="100%" stop-color="var(--color-pseudoscience)"/>
+          </linearGradient>
+        </defs>
+        <line x1="7" y1="2" x2="7" y2="70" stroke="url(#yg)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="7,0 11,8 3,8" fill="var(--color-science)"/>
+        <polygon points="7,72 11,64 3,64" fill="var(--color-pseudoscience)"/>
+      </svg>
+      <div>
+        <div class="s-desc" style="color:var(--color-science)">acima = ciência</div>
+        <div class="s-sub">consenso entre os<br>filósofos ativos</div>
+        <div style="height:14px"></div>
+        <div class="s-desc" style="color:var(--color-pseudoscience)">abaixo = pseudociência</div>
+        <div class="s-sub">maioria classifica<br>como não-científico</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-divider"></div>
+
+  <div class="s-section">
+    <span class="s-label">Anéis</span>
+    <div class="s-desc">cada anel = um filósofo ativo</div>
+    <div class="s-row" style="gap:10px;margin-top:2px">
+      <svg width="44" height="44" viewBox="-22 -22 44 44">
+        <circle r="10" fill="var(--color-science-bg)" stroke="var(--color-science)" stroke-width="1"/>
+        <circle r="15" fill="none" stroke="var(--color-science)" stroke-width="2.5" opacity=".8"/>
+      </svg>
+      <div>
+        <div class="s-desc" style="color:var(--color-science)">ciência</div>
+        <div class="s-sub">esse filósofo concorda</div>
+      </div>
+    </div>
+    <div class="s-row" style="gap:10px">
+      <svg width="44" height="44" viewBox="-22 -22 44 44">
+        <circle r="10" fill="var(--color-pseudoscience-bg)" stroke="var(--color-pseudoscience)" stroke-width="1"/>
+        <circle r="15" fill="none" stroke="var(--color-pseudoscience)" stroke-width="2.5" opacity=".8"/>
+      </svg>
+      <div>
+        <div class="s-desc" style="color:var(--color-pseudoscience)">pseudociência</div>
+        <div class="s-sub">esse filósofo discorda</div>
+      </div>
+    </div>
+    <div class="s-row" style="gap:10px">
+      <svg width="44" height="44" viewBox="-22 -22 44 44">
+        <circle r="10" fill="none" stroke="var(--text-light)" stroke-width="1"/>
+        <circle r="15" fill="none" stroke="var(--text-light)" stroke-width="2.5" opacity=".8"/>
+      </svg>
+      <div>
+        <div class="s-desc" style="color:var(--text-light)">não avaliado</div>
+        <div class="s-sub">esse filósofo não opinou</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-divider"></div>
+
+  <div class="s-section">
+    <span class="s-label">Exemplos</span>
+    <div id="sb-examples"></div>
+  </div>
+
+</div>
+
+<div id="sidebar-toggle" aria-label="Recolher barra lateral">
+  <svg id="toggle-icon" width="8" height="12" viewBox="0 0 8 12" fill="none" style="transition: transform 0.3s">
+    <path d="M5 10L1 6L5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>

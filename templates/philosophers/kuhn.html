@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thomas Kuhn - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+  
+  <style>
+    /* Styling to bind segment and arrow hovering together */
+    .kuhn-group {
+      cursor: pointer;
+    }
+    .kuhn-segment-arrow {
+      transition: fill 0.25s, filter 0.25s;
+    }
+    .kuhn-group:hover .kuhn-segment {
+      stroke-width: 16px;
+    }
+    .kuhn-group:hover .kuhn-segment-arrow {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+  </style>
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/kuhn.png') }}" 
+             alt="Foto de Thomas Kuhn" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">K</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Thomas Kuhn</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">O Ciclo das Revoluções Científicas</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Este infográfico representa as fases cíclicas do desenvolvimento científico segundo Kuhn. A ciência não avança de forma linear, mas passa por rupturas e transições periódicas. Clique nos segmentos da roda para explorar cada fase do processo.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="viz-workspace">
+          <div class="kuhn-wheel">
+            <svg width="100%" height="100%" viewBox="0 0 300 300" class="kuhn-cycle-svg" id="kuhn-svg">
+              <!-- Dynamically generated arc paths and arrow polygons go here -->
+            </svg>
+            <div class="kuhn-center-text" id="kuhn-center-label">Ciência<br>Normal</div>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="kuhn-desc-box">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // Dados da Visualização
+  const kuhnData = [
+    {
+      title: "1. Ciência Normal",
+      center: "Ciência<br>Normal",
+      desc: "Sob um paradigma estabelecido (um modelo compartilhado), os cientistas realizam pesquisas focadas em resolver 'quebra-cabeças' específicos. Há consenso metodológico absoluto, e teorias fundamentais não são questionadas."
+    },
+    {
+      title: "2. Acúmulo de Anomalias",
+      center: "Anomalias",
+      desc: "Eventualmente, surgem resultados experimentais inesperados que entram em contradição com o paradigma. Inicialmente, são ignorados ou tratados como erros experimentais dos próprios cientistas, mas começam a se acumular."
+    },
+    {
+      title: "3. Crise Epistemológica",
+      center: "Crise",
+      desc: "Com o acúmulo insustentável de anomalias sérias, a confiança no paradigma atual desmorona. A comunidade científica entra em um período de insegurança geral e debate filosófico aberto, buscando novos caminhos."
+    },
+    {
+      title: "4. Revolução Científica",
+      center: "Revolução",
+      desc: "Período de transição não cumulativo. Cientistas propõem explicações radicalmente novas. Há uma quebra de paradigma (Gestalt Switch), onde a percepção do mundo muda por completo e a comunicação se torna incomensurável."
+    },
+    {
+      title: "5. Estabelecimento do Novo Paradigma",
+      center: "Novo<br>Paradigma",
+      desc: "Um novo modelo teórico é adotado e aceito pela comunidade por sua capacidade superior de explicar as anomalias anteriores. Um novo ciclo de 'Ciência Normal' é iniciado sob bases teóricas totalmente reorganizadas."
+    }
+  ];
+
+  const AppColorKuhn = "{{ p.color }}";
+  let activeIndex = 0;
+
+  // Build the cycle elements dynamically in SVG
+  const svg = document.getElementById("kuhn-svg");
+  const r = 80;
+  const cx = 150;
+  const cy = 150;
+  const segmentWidth = 62; // 62 degrees wide
+
+  for (let i = 0; i < 5; i++) {
+    const startAngle = -90 + i * 72;
+    const endAngle = startAngle + segmentWidth;
+    
+    // Radians
+    const startRad = startAngle * Math.PI / 180;
+    const endRad = endAngle * Math.PI / 180;
+    
+    // Arc path points
+    const x1 = cx + r * Math.cos(startRad);
+    const y1 = cy + r * Math.sin(startRad);
+    const x2 = cx + r * Math.cos(endRad);
+    const y2 = cy + r * Math.sin(endRad);
+    
+    // Tangent vectors at endAngle
+    const tx = -Math.sin(endRad);
+    const ty = Math.cos(endRad);
+    // Radial vectors at endAngle
+    const rx = Math.cos(endRad);
+    const ry = Math.sin(endRad);
+    
+    // Normal size points
+    const tipX_n = x2 + 11.5 * tx;
+    const tipY_n = y2 + 11.5 * ty;
+    const outerX_n = x2 - 3.5 * tx + 8.5 * rx;
+    const outerY_n = y2 - 3.5 * ty + 8.5 * ry;
+    const innerX_n = x2 - 3.5 * tx - 8.5 * rx;
+    const innerY_n = y2 - 3.5 * ty - 8.5 * ry;
+    const ptsNormal = `${tipX_n},${tipY_n} ${outerX_n},${outerY_n} ${innerX_n},${innerY_n}`;
+
+    // Active/Hover size points
+    const tipX_a = x2 + 15.5 * tx;
+    const tipY_a = y2 + 15.5 * ty;
+    const outerX_a = x2 - 4.5 * tx + 11.5 * rx;
+    const outerY_a = y2 - 4.5 * ty + 11.5 * ry;
+    const innerX_a = x2 - 4.5 * tx - 11.5 * rx;
+    const innerY_a = y2 - 4.5 * ty - 11.5 * ry;
+    const ptsActive = `${tipX_a},${tipY_a} ${outerX_a},${outerY_a} ${innerX_a},${innerY_a}`;
+    
+    // Create group container
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("class", "kuhn-group");
+    g.setAttribute("data-idx", i);
+    
+    // Create Arc Path
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("class", "kuhn-segment");
+    path.setAttribute("d", `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`);
+    path.setAttribute("stroke", "#b0b0b0");
+    g.appendChild(path);
+    
+    // Create Arrow Polygon
+    const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    poly.setAttribute("class", "kuhn-segment-arrow");
+    poly.setAttribute("data-points-normal", ptsNormal);
+    poly.setAttribute("data-points-active", ptsActive);
+    poly.setAttribute("points", ptsNormal);
+    poly.setAttribute("fill", "#b0b0b0");
+    g.appendChild(poly);
+    
+    svg.appendChild(g);
+  }
+
+  function selectKuhnSegment(idx) {
+    activeIndex = idx;
+    document.querySelectorAll(".kuhn-group").forEach((group, i) => {
+      const isActive = i === idx;
+      const path = group.querySelector(".kuhn-segment");
+      const arrow = group.querySelector(".kuhn-segment-arrow");
+      
+      path.classList.toggle("active", isActive);
+      path.setAttribute("stroke", isActive ? AppColorKuhn : "#b0b0b0");
+      
+      arrow.classList.toggle("active", isActive);
+      arrow.setAttribute("fill", isActive ? AppColorKuhn : "#b0b0b0");
+      arrow.setAttribute("points", isActive ? arrow.getAttribute("data-points-active") : arrow.getAttribute("data-points-normal"));
+    });
+    
+    const data = kuhnData[idx];
+    document.getElementById("kuhn-center-label").innerHTML = data.center;
+    document.getElementById("kuhn-center-label").style.color = AppColorKuhn;
+    
+    const box = document.getElementById("kuhn-desc-box");
+    box.innerHTML = `<strong style="display:block; margin-bottom:6px; color:${AppColorKuhn}; font-size:15px;">${data.title}</strong>${data.desc}`;
+  }
+
+  // Click handler
+  document.querySelectorAll(".kuhn-group").forEach(group => {
+    group.addEventListener("click", (e) => {
+      const idx = parseInt(e.currentTarget.getAttribute("data-idx"));
+      selectKuhnSegment(idx);
+    });
+
+    // Sync hover sizes dynamically
+    group.addEventListener("mouseenter", (e) => {
+      const arrow = e.currentTarget.querySelector(".kuhn-segment-arrow");
+      arrow.setAttribute("points", arrow.getAttribute("data-points-active"));
+    });
+    group.addEventListener("mouseleave", (e) => {
+      const idx = parseInt(e.currentTarget.getAttribute("data-idx"));
+      const arrow = e.currentTarget.querySelector(".kuhn-segment-arrow");
+      if (idx !== activeIndex) {
+        arrow.setAttribute("points", arrow.getAttribute("data-points-normal"));
+      }
+    });
+  });
+
+  // Initialize
+  selectKuhnSegment(0);
+</script>
+
+</body>
+</html>

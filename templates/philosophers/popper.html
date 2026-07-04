@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karl Popper - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+  
+  <style>
+    /* Custom override to make markers look like pins with white borders */
+    .popper-marker {
+      border: 3px solid #ffffff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .popper-marker.active {
+      border: 3.5px solid var(--text-main);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    }
+    body.dark-mode .popper-marker {
+      border-color: #232323; /* matches var(--bg-card) of dark mode for seamless contrast */
+    }
+    body.dark-mode .popper-marker.active {
+      border-color: var(--text-main);
+    }
+  </style>
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/popper.png') }}" 
+             alt="Foto de Karl Popper" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">P</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Karl Popper</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">O Espectro da Falseabilidade</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Este espectro interativo mapeia teorias da nossa base de dados ao longo de uma escala que vai de infalseáveis/não científicas (à esquerda) a altamente testáveis/científicas (à direita), segundo o critério de demarcação de Karl Popper. Clique nos marcadores para explorar cada caso.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="viz-workspace">
+          <div class="popper-spectrum">
+            <div class="popper-line-labels">
+              <span>Metafísico / Infalseável</span>
+              <span>Científico / Testável</span>
+            </div>
+            <div class="popper-line-container">
+              <!-- Marcadores coloridos de acordo com o gradiente de fundo -->
+              <div class="popper-marker active" style="left: 15%; background-color: #ea4335;" data-idx="0" data-color="#ea4335" title="Astrologia"></div>
+              <div class="popper-marker" style="left: 38%; background-color: #fbbc05;" data-idx="1" data-color="#fbbc05" title="Psicanálise"></div>
+              <div class="popper-marker" style="left: 65%; background-color: #8ec13f;" data-idx="2" data-color="#8ec13f" title="Teoria da Evolução"></div>
+              <div class="popper-marker" style="left: 88%; background-color: #34a853;" data-idx="3" data-color="#34a853" title="Teoria da Relatividade Geral"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="popper-desc-box">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // Dados da Visualização baseados no Banco de Dados
+  const popperData = [
+    {
+      title: "1. Astrologia (Infalseável / Pseudociência)",
+      desc: "Afirmação do Banco de Dados: 'Faz previsões vagas e flexíveis, difíceis de refutar de forma decisiva'.<br>Explicação: A astrologia se baseia em traçar perfis e previsões tão gerais que qualquer resultado prático serve de confirmação. Como não há eventos empíricos possíveis que os astrólogos aceitariam como refutação definitiva de seus dogmas, ela se posiciona no extremo infalseável."
+    },
+    {
+      title: "2. Psicanálise (Baixa Falseabilidade / Pseudociência)",
+      desc: "Afirmação do Banco de Dados: 'Busca explicar todos os comportamentos, não sendo refutável'.<br>Explicação: Para Popper, as teorias psicanalíticas falham porque são compatíveis com qualquer ação humana imaginável (ex: se um homem salva uma criança ou se a afoga, a teoria tem justificativas para ambos os casos). Sem risco real de erro nas suas previsões, é considerada pseudociência."
+    },
+    {
+      title: "3. Teoria da Evolução (Alta Falseabilidade / Ciência)",
+      desc: "Afirmação do Banco de Dados: 'Fez previsões testáveis e poderia ter sido falseada por meio de experimentos'.<br>Explicação: A evolução faz previsões claras sobre registros fósseis (ex: não encontrar fósseis de mamíferos em camadas do Pré-Cambriano) e genética. Se descobríssemos evidências contraditórias estruturais nesses registros, a teoria seria refutada. Esse alto risco de erro a torna legítima ciência."
+    },
+    {
+      title: "4. Teoria da Relatividade Geral (Máxima Falseabilidade / Ciência)",
+      desc: "Afirmação do Banco de Dados: 'Poderia ter sido falseada pelo eclipse de 1919'.<br>Explicação: Einstein propôs que o Sol desviaria a luz de estrelas em uma fração precisa de segundo de arco. Era uma previsão ousada e numérica que foi exposta a testes severos durante o eclipse solar. Se o desvio não ocorresse ou o valor diferisse do calculado, a relatividade geral seria descartada na hora."
+    }
+  ];
+
+  function selectPopperMarker(idx) {
+    document.querySelectorAll(".popper-marker").forEach((marker, i) => {
+      const isActive = i === idx;
+      marker.classList.toggle("active", isActive);
+    });
+    const data = popperData[idx];
+    const box = document.getElementById("popper-desc-box");
+    const markerColor = popperData[idx].badgeColor || document.querySelectorAll(".popper-marker")[idx].getAttribute("data-color");
+    box.innerHTML = `<strong style="display:block; margin-bottom:6px; color:${markerColor}; font-size:15px;">${data.title}</strong>${data.desc}`;
+  }
+
+  document.querySelectorAll(".popper-marker").forEach(marker => {
+    marker.addEventListener("click", (e) => {
+      const idx = parseInt(e.target.getAttribute("data-idx"));
+      selectPopperMarker(idx);
+    });
+  });
+
+  // Inicializa
+  selectPopperMarker(0);
+</script>
+
+</body>
+</html>

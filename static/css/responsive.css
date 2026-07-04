@@ -1,0 +1,67 @@
+/* ── TABLET / MOBILE ── */
+@media (max-width: 768px) {
+  #sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+    box-shadow: none;
+  }
+  #sidebar.collapsed {
+    width: 0;
+    opacity: 0;
+  }
+  #sidebar-toggle {
+    z-index: 10;
+  }
+  #sidebar.collapsed + #sidebar-toggle {
+    left: 0;
+  }
+  #sidebar:not(.collapsed) + #sidebar-toggle {
+    left: 220px;
+  }
+
+  #top-bar {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  .phil-buttons {
+    gap: 2px;
+  }
+  .phil-btn {
+    padding: 4px 6px;
+  }
+}
+
+/* ── SMALL PHONES: caixinha becomes stacked and centered ── */
+@media (max-width: 480px) {
+  .bar-label { display: none; }
+
+  .phil-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.92);
+    width: calc(100vw - 32px);
+    max-width: calc(100vw - 32px);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .phil-card.open {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .phil-card-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .phil-card-name {
+    margin-right: 0;
+  }
+  .phil-card-image-container {
+    width: 100px;
+    height: 125px;
+  }
+}

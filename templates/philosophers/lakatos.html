@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imre Lakatos - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/lakatos.png') }}" 
+             alt="Foto de Imre Lakatos" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">L</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Imre Lakatos</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">Programas de Pesquisa Científica</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Esta visualização representa a estrutura metodológica de Lakatos. O conhecimento científico é organizado em programas de pesquisa compostos por um núcleo teórico rígido e um cinturão de hipóteses que orbita e protege esse núcleo. Clique ou passe o mouse sobre o Núcleo ou o Cinturão para explorar e fixar as descrições.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="viz-workspace">
+          <div class="lakatos-program">
+            <svg width="100%" height="100%" viewBox="0 0 300 300" class="lakatos-svg">
+              <!-- Outer boundary of program -->
+              <circle cx="150" cy="150" r="115" fill="none" stroke="var(--border-color)" stroke-dasharray="4,4" />
+              
+              <!-- Large transparent helper circle for broad hover detection of the belt -->
+              <circle cx="150" cy="150" r="115" id="lakatos-belt-hover-area" fill="transparent" style="cursor: pointer;" />
+              
+              <!-- Protective Belt (Saturn Ring Style - 3 concentric tilted ellipses) -->
+              <ellipse cx="150" cy="150" rx="70" ry="26" class="lakatos-circle lakatos-belt-ring" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" transform="rotate(-15 150 150)" style="pointer-events: none;" />
+              <ellipse cx="150" cy="150" rx="90" ry="34" class="lakatos-circle lakatos-belt-ring" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="6,4" transform="rotate(-15 150 150)" style="pointer-events: none;" />
+              <ellipse cx="150" cy="150" rx="110" ry="42" class="lakatos-circle lakatos-belt-ring" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" transform="rotate(-15 150 150)" style="pointer-events: none;" />
+              
+              <!-- Hard Core (Central Sphere, drawn last so it sits on top) -->
+              <circle cx="150" cy="150" r="30" class="lakatos-circle" id="lakatos-core" fill="none" stroke="{{ p.color }}" stroke-width="5" style="cursor: pointer;" />
+              
+              <!-- Texts labels inside SVG -->
+              <text x="150" y="153" text-anchor="middle" class="thagard-node-text" style="font-size:10px; font-weight:700; fill: {{ p.color }}; pointer-events: none;">NÚCLEO</text>
+              <text x="150" y="234" text-anchor="middle" class="thagard-node-text" style="font-size:9px; font-weight:700; fill: var(--text-muted); pointer-events: none;">CINTURÃO PROTETOR</text>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="lakatos-desc-box">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  const AppColorLakatos = "{{ p.color }}";
+  
+  // Elementos do DOM
+  const coreEl = document.getElementById("lakatos-core");
+  const beltRings = document.querySelectorAll(".lakatos-belt-ring");
+  const beltHoverArea = document.getElementById("lakatos-belt-hover-area");
+  const descBox = document.getElementById("lakatos-desc-box");
+
+  let locked = null; // can be 'core', 'belt' or null
+
+  const explanations = {
+    general: "Clique ou passe o mouse sobre o diagrama para explorar os componentes de um programa de pesquisa científica. O item clicado fixará a explicação abaixo.",
+    core: "<strong style='display:block; margin-bottom:6px; color:" + AppColorLakatos + ";'>O Núcleo Firme (Hard Core)</strong>Consiste nos princípios teóricos fundamentais do programa de pesquisa (ex: as leis básicas da gravitação de Newton). Por convenção metodológica, os cientistas decidem que este núcleo é inalterável e imune à refutação imediata. Abandonar o núcleo significa abandonar o programa inteiro.",
+    belt: "<strong style='display:block; margin-bottom:6px; color:#fbbc05;'>O Cinturão Protetor (Protective Belt)</strong>Como os múltiplos anéis de Saturno, esta órbita protetora é composta por hipóteses auxiliares, precondições e modelos matemáticos. Diante de contradições experimentais, o cinturão 'absorve o impacto' sendo modificado (ex: ajustando cálculos ou postulando a existência de corpos celestes secundários, no caso da Gravitação Newtoniana), de forma que o Núcleo permaneça intocado."
+  };
+
+  function updateVisuals(hovered) {
+    // Active state is hovered if present, otherwise locked
+    const activeState = hovered || locked;
+    
+    // Core styling
+    if (activeState === 'core') {
+      coreEl.setAttribute("fill", AppColorLakatos + "22");
+      coreEl.setAttribute("stroke-width", "6.5");
+    } else {
+      coreEl.setAttribute("fill", "none");
+      coreEl.setAttribute("stroke-width", "5");
+    }
+
+    // Belt styling
+    if (activeState === 'belt') {
+      beltRings.forEach((ring) => {
+        ring.setAttribute("stroke", "#fbbc05");
+        ring.setAttribute("stroke-width", "3.5");
+      });
+    } else {
+      beltRings.forEach((ring, i) => {
+        ring.setAttribute("stroke", "#888");
+        ring.setAttribute("stroke-width", i === 1 ? "2" : "1.5");
+      });
+    }
+
+    // Description text
+    if (activeState) {
+      descBox.innerHTML = explanations[activeState];
+    } else {
+      descBox.innerHTML = explanations.general;
+    }
+  }
+
+  // Core Events
+  coreEl.addEventListener("mouseenter", (e) => {
+    e.stopPropagation();
+    updateVisuals('core');
+  });
+  coreEl.addEventListener("mouseleave", () => {
+    updateVisuals(null);
+  });
+  coreEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (locked === 'core') {
+      locked = null;
+    } else {
+      locked = 'core';
+    }
+    updateVisuals(null);
+  });
+
+  // Belt Events
+  beltHoverArea.addEventListener("mouseenter", () => {
+    updateVisuals('belt');
+  });
+  beltHoverArea.addEventListener("mouseleave", () => {
+    updateVisuals(null);
+  });
+  beltHoverArea.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (locked === 'belt') {
+      locked = null;
+    } else {
+      locked = 'belt';
+    }
+    updateVisuals(null);
+  });
+
+  // Click outside to clear lock
+  document.addEventListener("click", () => {
+    locked = null;
+    updateVisuals(null);
+  });
+
+  // Initialize
+  updateVisuals(null);
+</script>
+
+</body>
+</html>

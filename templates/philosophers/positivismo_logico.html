@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Positivismo Lógico - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/positivismo_logico.png') }}" 
+             alt="Foto de Positivismo Lógico" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">P</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Positivismo Lógico</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">O Crivo do Positivismo Lógico</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Esta simulação representa o critério de verificabilidade do Círculo de Viena. Para os positivistas lógicos, uma proposição só tem sentido cognitivo se for analítica (lógica/matemática) ou sintética (empiricamente testável). Caso contrário, é metafísica e considerada insignificante. Clique nas frases abaixo para submetê-las ao crivo.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="viz-workspace" style="min-height: auto;">
+          <div class="positivismo-categorizer">
+            <div class="positivismo-sentences">
+              <div class="positivismo-sentence-item" data-idx="0">
+                <span>"A água ferve a 100°C na altitude do nível do mar."</span>
+                <span class="positivismo-badge" id="badge-0" style="background:#eee; color:#333;">Verificar &rarr;</span>
+              </div>
+              <div class="positivismo-sentence-item" data-idx="1">
+                <span>"Nenhum solteiro é um homem casado."</span>
+                <span class="positivismo-badge" id="badge-1" style="background:#eee; color:#333;">Verificar &rarr;</span>
+              </div>
+              <div class="positivismo-sentence-item" data-idx="2">
+                <span>"A alma humana continua existindo após a morte corporal."</span>
+                <span class="positivismo-badge" id="badge-2" style="background:#eee; color:#333;">Verificar &rarr;</span>
+              </div>
+              <div class="positivismo-sentence-item" data-idx="3">
+                <span>"A beleza é o esplendor da verdade absoluta."</span>
+                <span class="positivismo-badge" id="badge-3" style="background:#eee; color:#333;">Verificar &rarr;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="positivismo-desc-box" style="min-height: 120px;">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  const AppColorPositivismo = "{{ p.color }}";
+
+  // Dados da Visualização
+  const positivismoData = [
+    {
+      type: "synthetic",
+      badgeText: "Sintética (Empírica)",
+      badgeColor: "#34a853",
+      desc: "<strong>Classe: Proposição Sintética.</strong><br>Esta proposição é considerada <strong>significativa</strong> (científica) pelo Círculo de Viena, pois seu significado reside no método de verificação experimental. Podemos ir ao laboratório, ferver a água, medir com um termômetro e verificar fisicamente a verdade ou falsidade da frase."
+    },
+    {
+      type: "analytic",
+      badgeText: "Analítica (Lógica)",
+      badgeColor: "#4285f4",
+      desc: "<strong>Classe: Proposição Analítica.</strong><br>Esta proposição é considerada <strong>significativa</strong> por definição de linguagem (é uma tautologia). O predicado 'não casado' já está contido no sujeito 'solteiro'. Não precisamos de dados empíricos para verificá-la; basta a lógica pura. Ela é verdadeira por definição racional e linguística."
+    },
+    {
+      type: "metaphysic",
+      badgeText: "Metafísica (Insignificante)",
+      badgeColor: "#ea4335",
+      desc: "<strong>Classe: Proposição Metafísica.</strong><br>Esta proposição é classificada pelo positivismo clássico como <strong>literalmente insignificante (nonsense)</strong>. Como não podemos imaginar nenhum experimento físico ou lógico que possa provar ou refutar empiricamente a presença de uma alma imaterial, a frase não é verdadeira nem falsa; ela simplesmente carece de sentido cognitivo real."
+    },
+    {
+      type: "metaphysic",
+      badgeText: "Metafísica (Insignificante)",
+      badgeColor: "#ea4335",
+      desc: "<strong>Classe: Proposição Metafísica.</strong><br>Esta proposição é <strong>rejeitada e descartada</strong>. Termos abstratos como 'essência do belo' ou 'verdade absoluta' não possuem correspondência factual observável nos sentidos humanos nem regras formais lógicas/matemáticas claras. Logo, são rotuladas como pseudoproposições poéticas vazias de valor científico."
+    }
+  ];
+
+  function evaluateSentence(idx) {
+    const data = positivismoData[idx];
+    const items = document.querySelectorAll(".positivismo-sentence-item");
+    const badge = document.getElementById(`badge-${idx}`);
+    
+    // Reset all items of the same type slightly
+    items[idx].classList.remove("verified", "shredded");
+    
+    if (data.type === "metaphysic") {
+      items[idx].classList.add("shredded");
+      badge.style.background = "#ea433522";
+      badge.style.color = "#ea4335";
+      badge.innerText = "Metafísica (Insignificante)";
+    } else {
+      items[idx].classList.add("verified");
+      badge.style.background = data.badgeColor + "22";
+      badge.style.color = data.badgeColor;
+      badge.innerText = data.badgeText;
+    }
+    
+    // Fill description box
+    const box = document.getElementById("positivismo-desc-box");
+    box.innerHTML = `<span style="display:block; margin-bottom:4px; font-size:11px; text-transform:uppercase; font-weight:700; color:${data.badgeColor};">${data.badgeText}</span>${data.desc}`;
+  }
+
+  document.querySelectorAll(".positivismo-sentence-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+      const idx = parseInt(e.currentTarget.getAttribute("data-idx"));
+      evaluateSentence(idx);
+    });
+  });
+
+  // Inicializa
+  const initialBox = document.getElementById("positivismo-desc-box");
+  initialBox.innerHTML = "Clique nas proposições da lista acima para submetê-las ao crivo lógico de verificabilidade do Círculo de Viena.";
+</script>
+
+</body>
+</html>

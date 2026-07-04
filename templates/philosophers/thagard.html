@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Thagard - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+  
+  <style>
+    /* Styling for the Radar Chart components */
+    .thagard-radar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+    }
+    .radar-polygon {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .radar-polygon:hover {
+      stroke-width: 3.5px;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.15));
+    }
+    .thagard-theory-btn {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text-main);
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .thagard-theory-btn:hover {
+      background: var(--bg-btn-hover);
+      transform: translateY(-1px);
+    }
+    .thagard-theory-btn.active {
+      color: #ffffff;
+      border-color: transparent;
+    }
+  </style>
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/thagard.png') }}" 
+             alt="Foto de Paul Thagard" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">T</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Paul Thagard</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">Radar de Avaliação Científica Multidimensional</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Esta visualização adapta a abordagem multidimensional de Thagard para demarcação científica em três eixos: Teoria (Coerência Explanativa), Comunidade (Abertura a Críticas) e História (Progresso e Adaptação). Clique nos botões ou nas fatias do gráfico de radar para avaliar as teorias.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="thagard-workspace">
+          <div class="thagard-network-layout">
+            <!-- Left Side: Interactive Radar SVG (adjusted size and coordinates to avoid cutoffs) -->
+            <div class="thagard-svg-wrapper" style="overflow: visible;">
+              <svg viewBox="0 0 317 220" class="thagard-svg" style="overflow: visible;">
+                <!-- Axes and Grid Lines (Alto=75, Médio=50, Baixo=25) -->
+                <!-- Center: (150, 115) -->
+                <!-- Level Alto (R=75) -->
+                <polygon points="150,40 215,152.5 85,152.5" fill="none" stroke="var(--border-color)" stroke-width="1.5" />
+                <!-- Level Médio (R=50) -->
+                <polygon points="150,65 193.3,140 106.7,140" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3,3" />
+                <!-- Level Baixo (R=25) -->
+                <polygon points="150,90 171.65,127.5 128.35,127.5" fill="none" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="3,3" />
+
+                <!-- Axis Lines -->
+                <line x1="150" y1="115" x2="150" y2="40" stroke="var(--border-color)" stroke-width="1" />
+                <line x1="150" y1="115" x2="215" y2="152.5" stroke="var(--border-color)" stroke-width="1" />
+                <line x1="150" y1="115" x2="85" y2="152.5" stroke="var(--border-color)" stroke-width="1" />
+
+                <!-- Text Labels for Vertices -->
+                <text x="150" y="28" text-anchor="middle" class="thagard-node-text" style="font-weight: 700; font-size: 11px;">TEORIA</text>
+                <text x="222" y="162" text-anchor="start" class="thagard-node-text" style="font-weight: 700; font-size: 11px;">COMUNIDADE</text>
+                <text x="78" y="162" text-anchor="end" class="thagard-node-text" style="font-weight: 700; font-size: 11px;">HISTÓRIA</text>
+
+                <!-- Data Polygons for the 3 Theories -->
+                <!-- Astrologia (T: Baixo, C: Baixo, H: Baixo) -->
+                <polygon id="radar-astrologia" points="150,90 171.65,127.5 128.35,127.5" class="radar-polygon" fill="#ea4335" stroke="#ea4335" stroke-width="2" fill-opacity="0.25" stroke-opacity="0.9" />
+                
+                <!-- Psicanálise (T: Médio, C: Baixo, H: Baixo) -->
+                <polygon id="radar-psicanalise" points="150,65 171.65,127.5 128.35,127.5" class="radar-polygon" fill="#fbbc05" stroke="#fbbc05" stroke-width="2" fill-opacity="0.25" stroke-opacity="0.9" />
+                
+                <!-- Teoria da Evolução (T: Alto, C: Alto, H: Alto) -->
+                <polygon id="radar-evolucao" points="150,40 215,152.5 85,152.5" class="radar-polygon" fill="#34a853" stroke="#34a853" stroke-width="2" fill-opacity="0.25" stroke-opacity="0.9" />
+              </svg>
+            </div>
+            
+            <!-- Right Side: Theory buttons -->
+            <div class="thagard-panel-side">
+              <span class="s-label" style="font-size:10px; margin-bottom:6px; display:block;">Selecione uma Teoria:</span>
+              <button class="thagard-theory-btn active" id="btn-evolucao" data-target="evolucao">Teoria da Evolução</button>
+              <button class="thagard-theory-btn" id="btn-psicanalise" data-target="psicanalise">Psicanálise</button>
+              <button class="thagard-theory-btn" id="btn-astrologia" data-target="astrologia">Astrologia</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="thagard-desc-box" style="min-height: 120px;">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  const AppColorThagard = "{{ p.color }}";
+
+  // Dados das 3 Teorias com Níveis Textuais de Demarcação e "Baixo" em vermelho
+  const thagardRadarData = {
+    evolucao: {
+      color: "#34a853",
+      title: "Teoria da Evolução (Classificação: Científica)",
+      scores: "Teoria: Alto | Comunidade: Alto | História: Alto",
+      desc: "<strong>Avaliação de Thagard:</strong><br>- <strong>Teoria (Alto):</strong> Altíssima coerência explanativa; resolve problemas complexos sobre a diversidade da vida de forma integrada.<br>- <strong>Comunidade (Alto):</strong> Pesquisadores altamente cooperativos, abertos à críticas, aplicando métodos severos de validação científica.<br>- <strong>História (Alto):</strong> Apresenta uma sucessão contínua de progresso conceitual acumulado desde 1859."
+    },
+    psicanalise: {
+      color: "#fbbc05",
+      title: "Psicanálise (Classificação: Especulativa)",
+      scores: "Teoria: Médio | <span style='color:#ea4335; font-weight:700;'>Comunidade: Baixo</span> | <span style='color:#ea4335; font-weight:700;'>História: Baixo</span>",
+      desc: "<strong>Avaliação de Thagard:</strong><br>- <strong>Teoria (Médio):</strong> Oferece explicações ricas sobre a mente humana, mas peca pela falta de coerência explanativa comparada a alternativas modernas (neurociências/Terapia Cognitiva Comportamental).<br>- <strong>Comunidade (Baixo):</strong> Menos aberta a refutações externas clínicas e testes científicos controlados.<br>- <strong>História (Baixo):</strong> Eixo estagnado, com pouco avanço conceitual frente a novas descobertas psicológicas."
+    },
+    astrologia: {
+      color: "#ea4335",
+      title: "Astrologia (Classificação: Não Científica)",
+      scores: "Teoria: <span style='color:#ea4335; font-weight:700;'>Baixo</span> | <span style='color:#ea4335; font-weight:700;'>Comunidade: Baixo</span> | <span style='color:#ea4335; font-weight:700;'>História: Baixo</span>",
+      desc: "<strong>Avaliação de Thagard:</strong><br>- <strong>Teoria (Baixo):</strong> Coerência explanativa extremamente baixa; faz alegações vagas e não possui mecanismos físicos comprováveis de causalidade.<br>- <strong>Comunidade (Baixo):</strong> Praticantes isolados e comunidade pouquíssimo ativa na busca crítica por anomalias ou revisão de seus preceitos.<br>- <strong>História (Baixo):</strong> Teoria que permaneceu praticamente estática e inalterada desde a Antiguidade."
+    }
+  };
+
+  // DOM Elements
+  const polyEvolucao = document.getElementById("radar-evolucao");
+  const polyPsicanalise = document.getElementById("radar-psicanalise");
+  const polyAstrologia = document.getElementById("radar-astrologia");
+
+  const btnEvolucao = document.getElementById("btn-evolucao");
+  const btnPsicanalise = document.getElementById("btn-psicanalise");
+  const btnAstrologia = document.getElementById("btn-astrologia");
+  const descBox = document.getElementById("thagard-desc-box");
+
+  const polygons = {
+    evolucao: polyEvolucao,
+    psicanalise: polyPsicanalise,
+    astrologia: polyAstrologia
+  };
+
+  const buttons = {
+    evolucao: btnEvolucao,
+    psicanalise: btnPsicanalise,
+    astrologia: btnAstrologia
+  };
+
+  function selectTheory(key) {
+    const data = thagardRadarData[key];
+    
+    // Toggle active buttons styles
+    Object.keys(buttons).forEach(k => {
+      const btn = buttons[k];
+      if (k === key) {
+        btn.classList.add("active");
+        btn.style.backgroundColor = data.color;
+      } else {
+        btn.classList.remove("active");
+        btn.style.backgroundColor = "var(--bg-card)";
+      }
+    });
+
+    // Toggle active radar polygons
+    Object.keys(polygons).forEach(k => {
+      const poly = polygons[k];
+      if (k === key) {
+        poly.setAttribute("fill-opacity", "0.5");
+        poly.setAttribute("stroke-width", "3.5");
+        poly.setAttribute("stroke-opacity", "1");
+      } else {
+        poly.setAttribute("fill-opacity", "0.05");
+        poly.setAttribute("stroke-width", "1");
+        poly.setAttribute("stroke-opacity", "0.25");
+      }
+    });
+
+    // Update explanation box
+    descBox.innerHTML = `
+      <div style="font-size:12px; font-weight:700; color:${data.color}; margin-bottom:4px; text-transform:uppercase;">${data.scores}</div>
+      <strong style="display:block; margin-bottom:8px; color:${data.color}; font-size:16px;">${data.title}</strong>
+      <p style="margin:0; font-size:13.5px; line-height:1.6; text-align:justify;">${data.desc}</p>
+    `;
+  }
+
+  // Set click events on buttons
+  Object.keys(buttons).forEach(k => {
+    buttons[k].addEventListener("click", () => selectTheory(k));
+  });
+
+  // Set click events on SVG polygons
+  Object.keys(polygons).forEach(k => {
+    polygons[k].addEventListener("click", () => selectTheory(k));
+  });
+
+  // Initialize
+  selectTheory("evolucao");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,603 @@
+/* ── DETAIL LAYOUT ── */
+.detail-body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s, color 0.3s;
+  padding: 40px 24px;
+}
+
+.detail-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── HEADER & BACK NAVIGATION ── */
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--bg-btn-hover);
+  transform: translateX(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Theme toggle in detail pages */
+#detail-theme-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+#detail-theme-toggle:hover {
+  background: var(--bg-btn-hover);
+}
+
+body.dark-mode .sun-element { display: block; }
+body.dark-mode .moon-element { display: none; }
+body:not(.dark-mode) .sun-element { display: none; }
+body:not(.dark-mode) .moon-element { display: block; }
+
+.detail-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── TOP SECTION: PROFILE CARD ── */
+.detail-profile-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.detail-img-section {
+  width: 160px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1.25;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+}
+
+body.dark-mode .detail-placeholder {
+  border: 2px dashed rgba(255, 255, 255, 0.08);
+}
+
+.detail-placeholder-initial {
+  font-size: 72px;
+  font-weight: 800;
+  user-select: none;
+}
+
+.detail-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.detail-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.detail-criterion {
+  width: 100%;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.detail-bio {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-light);
+  text-align: justify;
+}
+
+/* ── RIGHT COLUMN: VISUALIZATION PANEL ── */
+.detail-visualization-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.detail-visualization-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.detail-visualization-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.012);
+  border: 2px dashed var(--border-color);
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+body.dark-mode .detail-visualization-placeholder {
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.detail-visualization-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+  opacity: 0.85;
+}
+
+.detail-visualization-desc {
+  font-size: 14px;
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+/* ── RESPONSIVE DESIGN ── */
+@media (max-width: 950px) {
+  .detail-visualization-card {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-profile-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px;
+    gap: 20px;
+  }
+  .detail-img-section {
+    width: 140px;
+  }
+  .detail-info {
+    align-items: center;
+  }
+  .detail-name {
+    text-align: center;
+  }
+}
+
+/* ── VISUALIZER CONTAINERS & COMMON STYLES ── */
+.viz-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.viz-workspace {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  padding: 16px;
+}
+
+body.dark-mode .viz-workspace {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.viz-desc-box {
+  background: rgba(0, 0, 0, 0.02);
+  border-left: 4px solid var(--border-color);
+  border-radius: 4px;
+  padding: 16px 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-light);
+  min-height: 90px;
+  transition: all 0.25s ease;
+}
+
+body.dark-mode .viz-desc-box {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* ── 1. POPPER: SPECTRUM OF FALSIFIABILITY ── */
+.popper-spectrum {
+  width: 100%;
+  max-width: 650px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.popper-line-container {
+  position: relative;
+  height: 8px;
+  background: linear-gradient(to right, #ea4335, #fbbc05, #34a853);
+  border-radius: 4px;
+  margin: 0 10px;
+}
+
+.popper-line-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-top: -12px;
+}
+
+.popper-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: var(--bg-card);
+  border: 3px solid var(--text-muted);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.popper-marker:hover, .popper-marker.active {
+  width: 26px;
+  height: 26px;
+  border-width: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 2;
+}
+
+/* ── 2. KUHN: PARADIGM CYCLE ── */
+.kuhn-wheel {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.kuhn-cycle-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kuhn-segment {
+  fill: none;
+  stroke-width: 12;
+  cursor: pointer;
+  transition: stroke-width 0.25s, filter 0.25s, stroke 0.25s;
+}
+
+.kuhn-segment:hover, .kuhn-segment.active {
+  stroke-width: 16;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+}
+
+.kuhn-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ── 3. LAKATOS: RESEARCH PROGRAM ── */
+.lakatos-program {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.lakatos-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.lakatos-circle {
+  transition: fill 0.3s, stroke-width 0.3s, stroke 0.3s;
+}
+
+/* ── 4. FEYERABEND: METHODOLOGICAL BREAKTHROUGHS ── */
+.feyerabend-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.feyerabend-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feyerabend-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.feyerabend-card.active {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.feyerabend-rule {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ea4335;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.feyerabend-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.feyerabend-action {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── 5. POSITIVISMO LÓGICO: LOGICAL SCREEN ── */
+.positivismo-categorizer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.positivismo-sentences {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.positivismo-sentence-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.positivismo-sentence-item:hover {
+  background: var(--bg-btn-hover);
+  transform: translateX(2px);
+}
+
+.positivismo-sentence-item.verified {
+  border-left: 4px solid #34a853;
+}
+
+.positivismo-sentence-item.shredded {
+  border-left: 4px solid #ea4335;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.positivismo-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+/* ── 6. THAGARD: COHERENCE NETWORK ── */
+.thagard-workspace {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.thagard-network-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 650px) {
+  .thagard-network-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.thagard-svg-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.thagard-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.thagard-node-circle {
+  transition: r 0.25s, filter 0.25s;
+}
+
+.thagard-node-text {
+  font-size: 9px;
+  font-weight: 700;
+  font-family: var(--font-main);
+  pointer-events: none;
+  fill: var(--text-main);
+}
+
+.thagard-panel-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.thagard-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.thagard-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.thagard-coherence-result {
+  background: rgba(0, 0, 0, 0.01);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theory-coherence-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theory-coherence-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.theory-bar-outer {
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.theory-bar-inner {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+
+

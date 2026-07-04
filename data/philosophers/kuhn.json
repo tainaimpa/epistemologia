@@ -1,0 +1,10 @@
+{
+  "key": "kuhn",
+  "csv_prefix": "Kuhn",
+  "csv_name": "Thomas Kuhn",
+  "order": 3,
+  "name": "Kuhn",
+  "full_name": "Thomas Kuhn",
+  "color": "#2e9e5b",
+  "default_active": true
+}

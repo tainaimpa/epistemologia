@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Feyerabend - Detalhes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}" />
+</head>
+<body class="detail-body">
+
+<script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+</script>
+
+<div class="detail-container">
+  <!-- Cabeçalho de Navegação -->
+  <header class="detail-header">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Voltar para o Painel Principal
+    </a>
+    
+    <button id="detail-theme-toggle" aria-label="Alternar tema">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5" class="sun-element"/>
+        <line x1="12" y1="1" x2="12" y2="3" class="sun-element"/>
+        <line x1="12" y1="21" x2="12" y2="23" class="sun-element"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-element"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-element"/>
+        <line x1="1" y1="12" x2="3" y2="12" class="sun-element"/>
+        <line x1="21" y1="12" x2="23" y2="12" class="sun-element"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-element"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-element"/>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-element"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Conteúdo em Duas Colunas -->
+  <div class="detail-content-wrapper">
+    <!-- Coluna Esquerda: Perfil do Filósofo -->
+    <aside class="detail-profile-card">
+      <div class="detail-img-section">
+        <img src="{{ url_for('static', filename='images/philosophers/feyerabend.png') }}" 
+             alt="Foto de Paul Feyerabend" 
+             class="detail-img" 
+             style="display: none;"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="detail-placeholder" style="display: flex; background-color: {{ p.color }}18; border-color: {{ p.color }}55;">
+          <span class="detail-placeholder-initial" style="color: {{ p.color }};">F</span>
+        </div>
+      </div>
+      
+      <div class="detail-info">
+        <h1 class="detail-name">Paul Feyerabend</h1>
+        <div style="width:100%;">
+          <span class="detail-criterion" style="color: {{ p.color }}; background-color: {{ p.color }}15; border: 1px solid {{ p.color }}33;">
+            Critério:<br>{{ p.criterion | safe }}
+          </span>
+        </div>
+        <p class="detail-bio">{{ p.bio | safe }}</p>
+      </div>
+    </aside>
+
+    <!-- Coluna Direita: Visualização Customizada -->
+    <main class="detail-visualization-card">
+      <h2 class="detail-visualization-title">Casos de Ruptura Metodológica</h2>
+      <p class="detail-visualization-intro" style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; text-align: justify;">
+        Este painel demonstra a tese de Feyerabend sobre o progresso científico. Ele argumentava que as descobertas mais importantes da história da ciência só ocorreram porque cientistas violaram ativamente regras metodológicas rígidas. Clique nas regras abaixo para analisar cada caso histórico.
+      </p>
+      
+      <div class="viz-panel">
+        <div class="viz-workspace" style="min-height: auto;">
+          <div class="feyerabend-grid">
+            <div class="feyerabend-card active" data-idx="0">
+              <span class="feyerabend-rule" style="color: var(--text-muted);">Norma Epistemológica</span>
+              <h3 class="feyerabend-title">1. Respeitar Fatos Observáveis</h3>
+              <span class="feyerabend-action">Ver caso histórico &rarr;</span>
+            </div>
+            
+            <div class="feyerabend-card" data-idx="1">
+              <span class="feyerabend-rule" style="color: var(--text-muted);">Norma Epistemológica</span>
+              <h3 class="feyerabend-title">2. Consistência com o Estabelecido</h3>
+              <span class="feyerabend-action">Ver caso histórico &rarr;</span>
+            </div>
+            
+            <div class="feyerabend-card" data-idx="2">
+              <span class="feyerabend-rule" style="color: var(--text-muted);">Norma Epistemológica</span>
+              <h3 class="feyerabend-title">3. Rejeitar Teorias Contraditórias</h3>
+              <span class="feyerabend-action">Ver caso histórico &rarr;</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Painel explicativo dinâmico -->
+        <div class="viz-desc-box" id="feyerabend-desc-box" style="min-height: 140px;">
+          <!-- Carregado via JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Controle de Tema
+  document.getElementById("detail-theme-toggle").addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  const AppColorFeyerabend = "{{ p.color }}";
+
+  // Dados da Visualização
+  const feyerabendData = [
+    {
+      rule: "Norma: 'Uma nova teoria deve sempre concordar com fatos observados diretamente.'",
+      caseTitle: "Caso Histórico: Galileu Galilei e o Heliocentrismo",
+      desc: "Na época de Galileu, a observação a olho nu sugeria que a Terra não se movia (pois não sentíamos ventos constantes ou deslocamento lateral de quedas livres). Para defender o heliocentrismo de Copérnico, Galileu teve que ignorar essa evidência 'óbvia' e propor teorias ad-hoc sobre relatividade do movimento e inércia física. Se ele tivesse seguido estritamente a regra de aceitar apenas fatos observacionais primários da época, o heliocentrismo teria sido descartado."
+    },
+    {
+      rule: "Norma: 'Novas hipóteses devem ser coerentes e compatíveis com teorias científicas já bem sucedidas.'",
+      caseTitle: "Caso Histórico: Albert Einstein e a Física Newtoniana",
+      desc: "A mecânica clássica de Isaac Newton era extremamente bem-sucedida e explicava praticamente todo o cosmos físico. A Relatividade de Einstein quebrou frontalmente o conceito de tempo e espaço absolutos estabelecido por Newton. Se Einstein se curvasse à regra metodológica de consistência com os alicerces teóricos consolidados da época, sua revolução física teria sido rejeitada."
+    },
+    {
+      rule: "Norma: 'Rejeite imediatamente qualquer hipótese que entre em contradição teórica imediata com o modelo experimental.'",
+      caseTitle: "Caso Histórico: O Nascimento da Teoria Atômica Inicial",
+      desc: "Quando o modelo atômico de Bohr e ideias atômicas de órbitas quantizadas foram propostos, eles contradiziam diretamente as leis clássicas da eletrodinâmica (onde elétrons acelerados deveriam espiralar e colapsar no núcleo). Os cientistas decidiram ativamente ignorar essa contradição óbvia para explorar o potencial do modelo. A insistência cega numa regra de consistência teórica imediata teria abortado toda a física quântica e a química moderna."
+    }
+  ];
+
+  function selectFeyerabendCard(idx) {
+    document.querySelectorAll(".feyerabend-card").forEach((card, i) => {
+      card.classList.toggle("active", i === idx);
+      card.style.borderColor = i === idx ? AppColorFeyerabend : "var(--border-card)";
+      card.style.backgroundColor = i === idx ? AppColorFeyerabend + "08" : "var(--bg-card)";
+      
+      const ruleLabel = card.querySelector(".feyerabend-rule");
+      if (ruleLabel) {
+        ruleLabel.style.color = i === idx ? AppColorFeyerabend : "var(--text-muted)";
+      }
+    });
+    
+    const data = feyerabendData[idx];
+    const box = document.getElementById("feyerabend-desc-box");
+    box.innerHTML = `
+      <div style="font-size:12px; font-weight:700; color:${AppColorFeyerabend}; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.04em;">${data.rule}</div>
+      <strong style="display:block; margin-bottom:8px; color:${AppColorFeyerabend}; font-size:16px;">${data.caseTitle}</strong>
+      <p style="margin:0; font-size:13.5px; line-height:1.6; text-align:justify;">${data.desc}</p>
+    `;
+  }
+
+  document.querySelectorAll(".feyerabend-card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      const targetCard = e.currentTarget;
+      const idx = parseInt(targetCard.getAttribute("data-idx"));
+      selectFeyerabendCard(idx);
+    });
+  });
+
+  // Inicializa
+  selectFeyerabendCard(0);
+</script>
+
+</body>
+</html>

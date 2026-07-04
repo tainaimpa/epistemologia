@@ -1,0 +1,63 @@
+:root {
+  --font-main: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Gruvbox Light Palette (Customized) */
+  --bg-body: #ebdbb2;
+  --bg-bar: #ebdbb2;
+  --bg-sidebar: #d5c4a1;
+  --bg-canvas: #ebdbb2;
+  --border-color: #bdae93;
+  --text-main: #282828;
+  --text-muted: #7c6f64;
+  --text-light: #928374;
+  --bg-tooltip: #f2e5bc;
+  --border-tooltip: #bdae93;
+  --bg-btn-hover: #d5c4a1;
+  --bg-btn-ring-inactive: #bdae93;
+  --grid-line: #bdae93;
+  --text-bubble: #282828;
+  --bg-card: #f2e5bc;
+  --border-card: #bdae93;
+
+  /* Status Colors (Light Theme) */
+  --color-science: #689d6a; /* Dark Aqua/Green */
+  --color-science-bg: rgba(104, 157, 106, 0.12);
+  --color-pseudoscience: #cc241d; /* Dark Red */
+  --color-pseudoscience-bg: rgba(204, 36, 29, 0.08);
+  --color-divided: #d79921;
+  --color-divided-bg: rgba(215, 153, 33, 0.05);
+
+  /* Background Paper Noise Texture */
+  --bg-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+body.dark-mode {
+  /* Gruvbox Dark Palette (Customized) */
+  --bg-body: #282828;
+  --bg-bar: #282828;
+  --bg-sidebar: #1d2021;
+  --bg-canvas: #282828;
+  --border-color: rgba(146, 131, 116, 0.2); /* #928374 with opacity */
+  --text-main: #ebdbb2;
+  --text-muted: #a89984;
+  --text-light: #928374;
+  --bg-tooltip: #1d2021;
+  --border-tooltip: #928374;
+  --bg-btn-hover: #1d2021;
+  --bg-btn-ring-inactive: #928374;
+  --grid-line: rgba(146, 131, 116, 0.15);
+  --text-bubble: #ebdbb2;
+  --bg-card: #1d2021;
+  --border-card: rgba(146, 131, 116, 0.2);
+
+  /* Status Colors (Dark Theme) */
+  --color-science: #98971a; /* Gruvbox Green */
+  --color-science-bg: rgba(152, 151, 26, 0.12);
+  --color-pseudoscience: #bf4040; /* Customized Red */
+  --color-pseudoscience-bg: rgba(191, 64, 64, 0.08);
+  --color-divided: #fabd2f; /* Bright Yellow */
+  --color-divided-bg: rgba(250, 189, 47, 0.05);
+
+  /* Background Paper Noise Texture */
+  --bg-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+}

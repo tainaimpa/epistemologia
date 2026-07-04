@@ -1,0 +1,115 @@
+/* ── TOP BAR ── */
+#top-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 10px 24px 8px;
+  flex-shrink: 0;
+  background-color: var(--bg-bar);
+  background-image: var(--bg-noise);
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.3s, border-color 0.3s;
+}
+#top-bar .bar-label {
+  font-size: 16px; font-weight: 500; color: var(--text-muted); margin-right: 8px; white-space: nowrap;
+}
+
+.phil-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── MAIN ── */
+#main { flex: 1; display: flex; overflow: hidden; position: relative; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--bg-sidebar);
+  background-image: var(--bg-noise);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 20px 16px;
+  gap: 20px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              background 0.3s,
+              border-color 0.3s;
+}
+#sidebar.collapsed {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#sidebar-toggle {
+  position: absolute;
+  left: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 48px;
+  border-radius: 0 8px 8px 0;
+  background-color: var(--bg-sidebar);
+  background-image: var(--bg-noise);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: var(--text-muted);
+  box-shadow: none;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s,
+              border-color 0.3s,
+              color 0.3s;
+}
+#sidebar-toggle:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-main);
+}
+#sidebar.collapsed + #sidebar-toggle {
+  left: 0;
+}
+
+.s-section { display: flex; flex-direction: column; gap: 9px; }
+.s-label {
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .07em;
+}
+.s-row { display: flex; align-items: center; gap: 10px; }
+.s-desc { font-size: 13px; color: var(--text-light); line-height: 1.4; transition: color 0.3s; }
+.s-sub  { font-size: 11px; color: var(--text-muted); line-height: 1.3; margin-top: 1px; transition: color 0.3s; }
+.sb-divider { height: 1px; background: var(--border-color); flex-shrink: 0; transition: background 0.3s; }
+
+/* ── VIZ ── */
+/* Bubbles shrink as the container narrows (see chart.js updateSizing); once
+   they hit their minimum readable size the chart scrolls horizontally
+   instead of letting bubbles overlap. */
+#viz-container { flex: 1; position: relative; overflow-x: auto; overflow-y: hidden; }
+#viz-container svg { height: 100%; display: block; }
+#viz-container svg rect.bg { fill: var(--bg-canvas); transition: fill 0.3s; }
+.gridline line { stroke: var(--grid-line); stroke-width: 1.3; stroke-dasharray: 7,7; transition: stroke 0.3s; }
+.blabel { fill: var(--text-bubble); font-family: var(--font-main); font-weight: 600; transition: fill 0.3s; }
+.bubble .core { fill: var(--bg-canvas); stroke: var(--border-color); stroke-width: 1px; transition: fill 0.3s, stroke 0.3s; }
+.btheme-icon {
+  color: var(--text-bubble);
+  opacity: 0.55;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+/* ── LOCKED BUBBLE HIGH-CONTRAST HIGHLIGHT ── */
+.bubble.locked .core {
+  stroke: var(--text-main);
+  stroke-width: 3px;
+  stroke-dasharray: 4, 3;
+}

@@ -1,0 +1,301 @@
+/* ── ABOUT LINK ── */
+#about-link:hover {
+  background: var(--bg-btn-hover);
+  border-color: var(--border-card);
+}
+
+/* ── THEME TOGGLE ── */
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  outline: none;
+}
+#theme-toggle:hover {
+  background: var(--bg-btn-hover);
+}
+body.dark-mode .sun-element { display: block; }
+body.dark-mode .moon-element { display: none; }
+body:not(.dark-mode) .sun-element { display: none; }
+body:not(.dark-mode) .moon-element { display: block; }
+
+/* ── PHILOSOPHER BUTTON (checkbox + name + info) ── */
+.phil-btn {
+  position: relative;
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 8px 5px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  user-select: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.phil-btn:hover {
+  background: var(--bg-btn-hover);
+}
+.phil-btn.active {
+  background: color-mix(in srgb, var(--phil-color, var(--bg-btn-ring-inactive)) 14%, transparent);
+  border-color: color-mix(in srgb, var(--phil-color, var(--bg-btn-ring-inactive)) 45%, transparent);
+}
+
+.phil-checkbox {
+  appearance: none; -webkit-appearance: none;
+  width: 15px; height: 15px; border-radius: 50%;
+  border: 2px solid var(--bg-btn-ring-inactive);
+  background: var(--bg-canvas); margin: 0;
+  cursor: pointer; flex-shrink: 0;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.phil-checkbox:checked {
+  border-color: var(--phil-color, var(--bg-btn-ring-inactive));
+  background-color: var(--phil-color, var(--bg-btn-ring-inactive));
+}
+.phil-checkbox:focus-visible {
+  outline: 2px solid var(--phil-color, var(--bg-btn-ring-inactive));
+  outline-offset: 2px;
+}
+
+.pname {
+  font-size: 14px; font-weight: 500; line-height: 1.1;
+  color: var(--text-main);
+}
+.phil-btn.active .pname { font-weight: 600; }
+
+.phil-info-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  padding: 0; margin: 0;
+  border: none; border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.15s, color 0.2s;
+}
+.phil-info-btn:hover, .phil-info-btn:focus-visible {
+  background: var(--bg-btn-hover);
+  color: var(--text-main);
+  outline: none;
+}
+.phil-btn.active .phil-info-btn { color: var(--text-light); }
+
+/* ── MODAL BACKDROP ── */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+.modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.phil-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  z-index: 1001;
+  width: 680px;
+  max-width: calc(100vw - 32px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.25s;
+}
+.phil-card.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.phil-card-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  width: 32px;
+  height: 32px;
+}
+.phil-card-close:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-main);
+}
+
+.phil-card-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.phil-card-image-container {
+  width: 120px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.phil-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.phil-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+body.dark-mode .phil-card-placeholder {
+  border: 2px dashed rgba(255, 255, 255, 0.08);
+}
+
+.phil-card-placeholder-initial {
+  font-size: 44px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.phil-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.phil-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 2px;
+  margin-right: 24px; /* leave space for close button */
+}
+
+.phil-card-criterion {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.phil-card-bio {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+.phil-card-reference {
+  font-size: 11px; line-height: 1.4; color: var(--text-muted);
+  margin-top: 8px; font-style: italic;
+}
+
+.phil-card-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.phil-card-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.phil-card-expand-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+}
+
+.phil-card-expand-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ── TOOLTIP ── */
+.tip-card {
+  position: absolute;
+  background: var(--bg-tooltip);
+  border: 2px solid var(--border-tooltip);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-main);
+  font-size: 14px; color: var(--text-main);
+  box-shadow: none;
+  line-height: 1.5; min-width: 220px; max-width: 280px;
+  max-height: calc(100% - 16px); overflow-y: auto;
+  pointer-events: none; display: none; z-index: 20;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.tip-card .tip-name  { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.tip-card .tip-block { margin-top: 8px; border-top: 1px solid var(--border-color); padding-top: 8px; }
+.tip-card .tip-phil  { font-size: 13px; font-weight: 600; margin-bottom: 3px; display: flex; align-items: center; }
+.tip-card ul { padding-left: 16px; margin: 0; }
+.tip-card ul li { font-size: 12px; color: var(--text-light); }
+
+.tip-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 500;
+  padding: 4px;
+  transition: color 0.2s, transform 0.2s;
+}
+.tip-close-btn:hover {
+  color: var(--text-main);
+  transform: scale(1.15);
+}

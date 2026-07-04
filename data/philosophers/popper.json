@@ -1,0 +1,10 @@
+{
+  "key": "popper",
+  "csv_prefix": "Popper",
+  "csv_name": "Karl Popper",
+  "order": 1,
+  "name": "Popper",
+  "full_name": "Karl Popper",
+  "color": "#2e9e5b",
+  "default_active": true
+}
