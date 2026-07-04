@@ -176,7 +176,6 @@ body.dark-mode .detail-placeholder {
   min-height: 520px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 32px;
 }
 
 .detail-visualization-title {
@@ -596,6 +595,33 @@ body.dark-mode .viz-desc-box {
   border-radius: 4px;
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── SOURCES CARD AT BOTTOM ── */
+.detail-sources-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  transition: background 0.3s, border-color 0.3s;
+  margin-bottom: 32px;
+}
+
+.detail-sources-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.detail-sources-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-light);
+  text-align: left;
+}
+
 
 
 

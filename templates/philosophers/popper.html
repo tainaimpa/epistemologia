@@ -123,6 +123,13 @@
       </div>
     </main>
   </div>
+
+  {% if p.reference %}
+  <section class="detail-sources-card">
+    <h3 class="detail-sources-title">Referências e Fontes</h3>
+    <p class="detail-sources-text">{{ p.reference | safe }}</p>
+  </section>
+  {% endif %}
 </div>
 
 <script>
